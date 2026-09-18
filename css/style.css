@@ -1,0 +1,500 @@
+/* ==========================================================================
+   LOMBO CONSULTORES — plantilla de demostración (negocio ficticio)
+   Concepto «Expediente»: la carpeta de despacho con una pestaña de color por
+   área. El gesto que firma la web es abrir una pestaña, no sumar ni sellar.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+
+:root{
+  /* --- superficies --- */
+  --manila:#E8DFC8;
+  --manila-sombra:#DCD1B7;
+  --crema:#F4EEE0;
+  --papel:#FBF8F1;
+  --tinta:#2B241C;
+  --tinta-suave:#3B3226;
+  --linea:#C9BC9E;
+
+  /* --- texto --- */
+  --texto:#2B241C;
+  --apagado:#5F574B;        /* AA sobre manila 5.36 · crema 6.15 · papel 6.71 */
+  --apagado-oscuro:#B9AF9E; /* AA sobre tinta 7.06, para el pie oscuro */
+
+  /* --- las cuatro pestañas --- */
+  --fiscal:#33473C;
+  --laboral:#5C6B72;
+  --contable:#9C5A42;
+  --sociedades:#5C3A4E;
+
+  /* tokens de TEXTO derivados de cada acento: el de marca se queda intacto en
+     fondos y filetes; estos son los únicos que se usan para letras sobre
+     manila/crema/papel, calculados con contraste.py hasta pasar 4.5:1 */
+  --fiscal-texto:#33473C;      /* 7.51 sobre manila */
+  --laboral-texto:#556065;     /* 4.87 sobre manila (el tono de marca solo da 4.16) */
+  --contable-texto:#8B523C;    /* 4.69 sobre manila (el tono de marca solo da 4.00) */
+  --sociedades-texto:#5C3A4E;  /* 7.29 sobre manila */
+
+  --sobre-acento:#FBF8F1;      /* texto sobre cualquiera de los 4 rellenos: 5.01–9.40 */
+
+  --radio:14px;
+  --sombra-carpeta: 0 18px 40px -22px rgba(43,36,28,.45);
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --maquina: "Special Elite", "Courier New", monospace;
+
+  --ancho: 1220px;
+  --huelgo: clamp(3.2rem, 8vw, 7.5rem);
+}
+
+html.has-motion [data-aparecer]{ opacity:0; transform:translateY(26px); }
+html.has-motion [data-revelar] .palabra > i{ display:inline-block; transform:translate3d(0,120%,0); }
+
+body{
+  margin:0;
+  background:var(--manila);
+  color:var(--texto);
+  font-family:var(--serif);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+html{ overflow-x:clip; }
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+h1,h2,h3,h4{ font-weight:600; margin:0; line-height:1.15; }
+p{ margin:0; }
+ul,ol{ margin:0; padding:0; list-style:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+input,select,textarea{ font:inherit; }
+
+.visual-oculto{
+  position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+:focus-visible{ outline:3px solid var(--fiscal); outline-offset:3px; }
+
+.salto{
+  position:fixed; left:12px; top:-60px; z-index:400;
+  background:var(--tinta); color:var(--papel); padding:.7em 1.1em;
+  border-radius:8px; transition:top .2s;
+}
+.salto:focus{ top:12px; }
+
+.envoltorio{ max-width:var(--ancho); margin-inline:auto; padding-inline:clamp(1.25rem,4vw,2.5rem); }
+
+section{ padding-block: var(--huelgo); }
+
+.rotulo{
+  font-family:var(--maquina); font-size:.82rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--apagado); display:flex; align-items:center; gap:.6em; margin-bottom:1.1em;
+}
+.rotulo span{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:1.8em; height:1.8em; border:1px solid var(--linea); border-radius:50%;
+  color:var(--texto);
+}
+
+.titular{ font-family:var(--serif); font-weight:600; letter-spacing:-.01em; }
+.titular--hero{ font-size:clamp(2.2rem, 5vw, 4rem); }
+section > .cab .titular, [class$="-cab"] .titular{ font-size:clamp(1.9rem, 3.6vw, 3rem); margin-block:.4em .5em; }
+
+.parrafo{ max-width:56ch; color:var(--texto); }
+.parrafo--grande{ font-size:1.15rem; max-width:52ch; }
+.parrafo--nota{ color:var(--apagado); font-size:.95rem; }
+
+/* --- palabra por palabra: la caja Y la palabra deben ser inline-block, o
+   parte «se / mana» al envolver ------------------------------------------ */
+[data-revelar] .palabra{ display:inline-block; overflow:hidden; white-space:nowrap; vertical-align:top; }
+[data-revelar] .palabra > i{ display:inline-block; font-style:normal; will-change:transform; }
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+.boton{
+  display:inline-flex; align-items:center; gap:.6em;
+  padding:.85em 1.6em; border-radius:999px; font-family:var(--maquina);
+  font-size:.85rem; letter-spacing:.05em; text-transform:uppercase;
+  text-decoration:none; border:1px solid transparent; transition:background .2s, color .2s, border-color .2s;
+}
+.boton--tinta{ background:var(--tinta); color:var(--papel); }
+.boton--tinta:hover{ background:var(--tinta-suave); }
+.boton--linea{ background:transparent; color:var(--texto); border-color:var(--tinta); }
+.boton--linea:hover{ background:var(--tinta); color:var(--papel); }
+
+/* ==========================================================================
+   CURSOR PERSONALIZADO — cambia sobre las pestañas físicas
+   ========================================================================== */
+.cursor{
+  position:fixed; top:0; left:0; z-index:300; pointer-events:none; translate:-50% -50%;
+  display:none; align-items:center; justify-content:center; flex-direction:column;
+}
+html.has-motion .cursor{ display:flex; }
+@media (hover:none), (pointer:coarse){ html.has-motion .cursor{ display:none; } }
+.cursor-punto{
+  width:12px; height:12px; border-radius:50%; background:var(--tinta);
+  transition:width .18s, height .18s, background .18s;
+}
+.cursor-texto{
+  position:absolute; top:20px; font-family:var(--maquina); font-size:.7rem; letter-spacing:.08em;
+  text-transform:uppercase; background:var(--tinta); color:var(--papel); padding:.3em .7em; border-radius:6px;
+  white-space:nowrap; opacity:0; transition:opacity .18s;
+}
+.cursor.es-grande .cursor-punto{ width:0; height:0; }
+.cursor.es-grande .cursor-texto{ opacity:1; }
+
+/* ==========================================================================
+   CABECERA
+   ========================================================================== */
+.cabecera{
+  position:sticky; top:0; z-index:120; display:flex; align-items:center; justify-content:space-between;
+  padding:.9rem clamp(1.25rem,4vw,2.5rem); background:var(--manila); border-bottom:1px solid var(--linea);
+}
+.marca{ display:flex; align-items:center; gap:.7em; text-decoration:none; color:var(--texto); }
+.marca-texto{ font-family:var(--maquina); font-size:.95rem; line-height:1.25; letter-spacing:.02em; }
+.marca-texto em{ display:block; font-style:normal; font-size:.68rem; color:var(--apagado); text-transform:uppercase; letter-spacing:.08em; }
+
+.nav-lista{ display:flex; gap:clamp(10px,1.6vw,24px); }
+.nav-lista a{
+  font-family:var(--maquina); font-size:.76rem; text-transform:uppercase; letter-spacing:.07em;
+  text-decoration:none; position:relative; padding-block:.3em;
+}
+.nav-lista a::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:0; background:var(--fiscal); transition:width .22s;
+}
+.nav-lista a:hover::after, .nav-lista a:focus-visible::after{ width:100%; }
+
+.nav{ display:flex; align-items:center; gap:clamp(16px,2.4vw,36px); }
+
+.hamburguesa{
+  display:none; width:44px; height:40px; border:1px solid var(--tinta); border-radius:8px;
+  flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  position:relative; z-index:140; /* por encima de .nav (130): si no, la propia
+    cortina del menú tapa el botón y abre pero no cierra */
+}
+.hamburguesa span{ display:block; width:20px; height:2px; background:var(--tinta); transition:transform .28s, opacity .2s; }
+.hamburguesa[aria-expanded="true"] span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.hamburguesa[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.hamburguesa[aria-expanded="true"] span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 900px){
+  .hamburguesa{ display:flex; }
+  .nav{
+    position:fixed; inset:0 0 0 auto; width:min(340px,86vw); height:100vh; background:var(--papel);
+    flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:2rem;
+    padding:5.5rem 2rem 2rem; transform:translateX(100%); visibility:hidden; transition:transform .32s ease, visibility 0s .32s;
+    border-left:1px solid var(--linea); z-index:130;
+  }
+  .nav.esta-abierto{ transform:translateX(0); visibility:visible; transition:transform .32s ease; }
+  .nav-lista{ flex-direction:column; gap:18px; }
+  .nav-lista a{ font-size:1.05rem; }
+}
+
+/* ==========================================================================
+   CORTINA DE ENTRADA — la carpeta se cierra sobre la pantalla y se retira
+   ========================================================================== */
+.cortina{
+  position:fixed; inset:0; z-index:500; display:flex; align-items:center; justify-content:center;
+  /* el fondo lo dan SOLO las dos tapas: si el contenedor también pintara
+     manila, taparía el hero aunque las tapas ya hubieran girado hacia fuera. */
+  background:transparent; perspective:1800px; pointer-events:none;
+}
+.cortina-tapa{
+  position:absolute; top:0; bottom:0; width:50%; background:var(--manila);
+  box-shadow: inset 0 0 0 1px var(--linea);
+}
+.cortina-tapa--izq{ left:0; transform-origin:left center; border-right:1px solid var(--linea); }
+.cortina-tapa--der{ right:0; transform-origin:right center; border-left:1px solid var(--linea); }
+.cortina-tapa::before{
+  content:""; position:absolute; top:0; bottom:0; width:14px; background:var(--manila-sombra);
+}
+.cortina-tapa--izq::before{ right:-1px; }
+.cortina-tapa--der::before{ left:-1px; }
+/* la pestaña recortada de una carpeta real, arriba de cada tapa */
+.cortina-tapa--izq::after, .cortina-tapa--der::after{
+  content:""; position:absolute; top:0; width:120px; height:38px; background:var(--crema);
+  border:1px solid var(--linea); border-top:0; border-radius:0 0 10px 10px;
+}
+.cortina-tapa--izq::after{ right:26px; }
+.cortina-tapa--der::after{ left:26px; }
+
+.cortina-sello{
+  position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  color:var(--tinta); text-align:center; transform:scale(1);
+}
+.cortina-sello .anillo{
+  width:132px; height:132px; border:3px solid var(--fiscal); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; transform:rotate(-8deg);
+}
+.cortina-sello .anillo span{
+  font-family:var(--maquina); font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; line-height:1.35;
+}
+.cortina-sello .num{ font-family:var(--maquina); font-size:.78rem; letter-spacing:.08em; color:var(--apagado); }
+
+html:not(.has-motion) .cortina,
+html.reduce-motion .cortina{ display:none !important; }
+
+/* ==========================================================================
+   HERO / PORTADA
+   ========================================================================== */
+.hero{
+  padding-block: clamp(3rem,9vw,6rem) clamp(2.5rem,7vw,5rem);
+  display:grid; grid-template-columns: 1.15fr .85fr; gap:clamp(2rem,5vw,4rem); align-items:center;
+  max-width:var(--ancho); margin-inline:auto; padding-inline:clamp(1.25rem,4vw,2.5rem);
+}
+.hero-texto{ max-width:640px; }
+.sobretitulo{
+  font-family:var(--maquina); font-size:.82rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--apagado); margin-bottom:1.1em;
+}
+.hero-texto .titular--hero{ margin-bottom:.6em; }
+.hero-acciones{ display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.8em; }
+.hero-datos{ display:flex; gap:clamp(1.2rem,3vw,2.4rem); flex-wrap:wrap; margin-top:2.4em; padding-top:1.6em; border-top:1px solid var(--linea); }
+.hero-datos dt{ font-family:var(--maquina); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--apagado); margin-bottom:.3em; }
+.hero-datos dd{ margin:0; font-size:1rem; }
+
+/* la carpeta de portada: se abre al cargar (estado final) y enseña las 4 pestañas */
+.hero-carpeta{ position:relative; }
+.carpeta-figura{
+  position:relative; background:var(--papel); border:1px solid var(--linea); border-radius:var(--radio);
+  box-shadow:var(--sombra-carpeta); padding:2.2rem 1.8rem 1.8rem; transform:rotate(-1.2deg);
+}
+.carpeta-figura::before{
+  content:""; position:absolute; inset:10px; border:1px dashed var(--linea); border-radius:10px; pointer-events:none;
+}
+.carpeta-pestanas-mini{ display:flex; gap:.5rem; margin-bottom:1.6rem; }
+.carpeta-pestanas-mini li{
+  flex:1; height:46px; border-radius:8px 8px 3px 3px; display:flex; align-items:flex-end; justify-content:center;
+  padding-bottom:.5rem; font-family:var(--maquina); font-size:.62rem; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--sobre-acento);
+}
+.carpeta-pestanas-mini li:nth-child(1){ background:var(--fiscal); }
+.carpeta-pestanas-mini li:nth-child(2){ background:var(--laboral); }
+.carpeta-pestanas-mini li:nth-child(3){ background:var(--contable); }
+.carpeta-pestanas-mini li:nth-child(4){ background:var(--sociedades); }
+.carpeta-marca{ display:flex; align-items:center; gap:1rem; }
+.carpeta-marca img{ width:56px; height:56px; }
+.carpeta-marca-texto p:first-child{ font-family:var(--maquina); font-size:1.05rem; }
+.carpeta-marca-texto p:last-child{ color:var(--apagado); font-size:.85rem; margin-top:.2em; }
+.carpeta-linea{ height:1px; background:var(--linea); margin:1.4rem 0; }
+.carpeta-nota{ font-family:var(--maquina); font-size:.72rem; color:var(--apagado); text-transform:uppercase; letter-spacing:.05em; }
+
+/* ==========================================================================
+   ÁREAS / EXPEDIENTE — recurso protagonista: pin + scrub horizontal
+   ========================================================================== */
+.areas-cab{ max-width:70ch; margin-inline:auto; padding-inline:clamp(1.25rem,4vw,2.5rem); text-align:left; }
+
+.expediente{ margin-top:clamp(2rem,5vw,3.5rem); }
+.expediente-viewport{ max-width:var(--ancho); margin-inline:auto; padding-inline:clamp(1.25rem,4vw,2.5rem); }
+
+.pestanas-fisicas{ display:flex; gap:.6rem; margin-bottom:0; position:relative; z-index:3; }
+.pestana-boton{
+  flex:1; display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-end;
+  gap:.15rem; padding:1rem 1.1rem .8rem; border-radius:12px 12px 0 0; text-decoration:none;
+  color:var(--sobre-acento); font-family:var(--maquina); min-height:74px;
+  transform:translateY(6px) scale(.97); transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  box-shadow:0 6px 14px -10px rgba(43,36,28,.4);
+}
+.pestana-boton .pestana-num{ font-size:.66rem; opacity:.85; letter-spacing:.06em; text-transform:uppercase; }
+.pestana-boton .pestana-nombre{ font-size:1rem; letter-spacing:.02em; }
+.pestana-boton--fiscal{ background:var(--fiscal); }
+.pestana-boton--laboral{ background:var(--laboral); }
+.pestana-boton--contable{ background:var(--contable); }
+.pestana-boton--sociedades{ background:var(--sociedades); }
+.pestana-boton.esta-activa{ transform:translateY(0) scale(1); box-shadow:0 14px 26px -14px rgba(43,36,28,.55); filter:saturate(1.08); }
+html.has-motion .pestana-boton:not(.esta-activa){ filter:saturate(.72); }
+.pestana-boton:focus-visible{ outline-color:var(--tinta); outline-offset:2px; }
+
+.expediente-marco{
+  background:var(--papel); border:1px solid var(--linea); border-radius:0 var(--radio) var(--radio) var(--radio);
+  box-shadow:var(--sombra-carpeta); overflow:hidden; position:relative;
+}
+.expediente-tira{
+  display:flex; flex-direction:column; gap:2px; background:var(--linea);
+}
+.pagina{
+  background:var(--papel); padding:clamp(1.8rem,4vw,3rem); display:grid; gap:1.6rem;
+  grid-template-columns: 1.2fr .9fr;
+}
+.pagina-cab h3{ font-size:clamp(1.4rem,2.6vw,2rem); margin-bottom:.35em; }
+.pagina-cab p{ color:var(--apagado); max-width:46ch; }
+.servicios{ margin-top:1.4rem; display:grid; gap:.7rem; }
+.servicios li{ display:flex; gap:.7em; align-items:baseline; }
+.servicios li::before{ content:"—"; color:var(--apagado); flex:none; }
+
+.tramite{
+  align-self:start; justify-self:end; text-align:center; border:2px solid; border-radius:10px;
+  padding:1.4rem 1.1rem; transform:rotate(3deg); background:var(--crema); min-width:180px;
+}
+.tramite .tramite-dia{ font-family:var(--maquina); font-size:1.9rem; line-height:1; display:block; }
+.tramite .tramite-mes{ font-family:var(--maquina); font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; display:block; margin-top:.2em; }
+.tramite p{ font-size:.85rem; margin-top:.7rem; color:var(--texto); }
+.pagina--fiscal .tramite{ border-color:var(--fiscal); color:var(--fiscal-texto); }
+.pagina--laboral .tramite{ border-color:var(--laboral); color:var(--laboral-texto); }
+.pagina--contable .tramite{ border-color:var(--contable); color:var(--contable-texto); }
+.pagina--sociedades .tramite{ border-color:var(--sociedades); color:var(--sociedades-texto); }
+
+@media (max-width: 760px){
+  .pagina{ grid-template-columns:1fr; }
+  .tramite{ justify-self:start; }
+  .pestanas-fisicas{ flex-wrap:wrap; }
+  .pestana-boton{ min-width:44%; }
+}
+
+/* --- estado anclado (solo desktop, con GSAP) --- */
+html.has-motion .expediente.esta-anclado .expediente-marco{ border-radius:0 var(--radio) var(--radio) var(--radio); }
+html.has-motion .expediente.esta-anclado .expediente-tira{
+  flex-direction:row; width:400%;
+}
+html.has-motion .expediente.esta-anclado .pagina{ width:25%; flex:none; }
+
+/* ==========================================================================
+   CONFIANZA — documento con clip metálico
+   ========================================================================== */
+.confianza{ background:var(--crema); }
+.confianza-cab{ text-align:center; max-width:60ch; margin-inline:auto; }
+.confianza-cab .titular{ margin-inline:auto; }
+.confianza-doc{
+  position:relative; max-width:920px; margin:clamp(2rem,5vw,3.5rem) auto 0; background:var(--papel);
+  border:1px solid var(--linea); border-radius:6px; box-shadow:var(--sombra-carpeta);
+  padding:clamp(2rem,5vw,3.2rem); transform:rotate(-.6deg);
+}
+.clip{ position:absolute; top:-26px; left:48px; width:46px; height:86px; transform:rotate(-8deg); }
+.confianza-valoracion{
+  display:flex; align-items:center; gap:1rem; margin-bottom:1.8rem; padding-bottom:1.6rem; border-bottom:1px dashed var(--linea);
+}
+.confianza-valoracion .cifra{ font-family:var(--maquina); font-size:2.4rem; }
+.confianza-valoracion .detalle p:first-child{ font-weight:600; }
+.confianza-valoracion .detalle p:last-child{ color:var(--apagado); font-size:.85rem; margin-top:.2em; max-width:44ch; }
+
+.testimonios{ display:grid; gap:1.6rem; grid-template-columns:repeat(3,1fr); }
+.testimonio blockquote{ margin:0; font-style:italic; }
+.testimonio footer{ margin-top:.9rem; font-family:var(--maquina); font-size:.78rem; color:var(--apagado); font-style:normal; }
+@media (max-width:820px){ .testimonios{ grid-template-columns:1fr; } }
+
+/* ==========================================================================
+   EQUIPO
+   ========================================================================== */
+.equipo-cab{ text-align:center; max-width:60ch; margin-inline:auto; }
+.equipo-cab .titular{ margin-inline:auto; }
+.equipo-fichas{
+  margin-top:clamp(2rem,5vw,3.5rem); display:grid; gap:1.8rem; grid-template-columns:repeat(2,1fr);
+  max-width:960px; margin-inline:auto;
+}
+.ficha{
+  position:relative; background:var(--papel); border:1px solid var(--linea); border-radius:0 var(--radio) var(--radio) var(--radio);
+  box-shadow:var(--sombra-carpeta); padding:2rem 1.8rem 1.8rem;
+}
+.ficha-pestana{
+  position:absolute; top:-30px; left:1.8rem; padding:.5rem 1rem; border-radius:8px 8px 0 0;
+  font-family:var(--maquina); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--sobre-acento);
+}
+.ficha--fiscal .ficha-pestana{ background:var(--fiscal); }
+.ficha--laboral .ficha-pestana{ background:var(--laboral); }
+.ficha-cab{ display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem; }
+.ficha-avatar{
+  width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:var(--maquina); font-size:1.1rem; color:var(--sobre-acento); flex:none;
+}
+.ficha--fiscal .ficha-avatar{ background:var(--fiscal); }
+.ficha--laboral .ficha-avatar{ background:var(--laboral); }
+.ficha h3{ font-size:1.2rem; }
+.ficha .cargo{ font-family:var(--maquina); font-size:.76rem; text-transform:uppercase; letter-spacing:.05em; color:var(--apagado); margin-top:.25em; }
+.ficha p.bio{ margin-top:1rem; }
+@media (max-width:760px){ .equipo-fichas{ grid-template-columns:1fr; } }
+
+/* ==========================================================================
+   CONTACTO + PIE
+   ========================================================================== */
+.contacto{ background:var(--tinta); color:var(--papel); }
+.contacto .rotulo{ color:var(--apagado-oscuro); }
+.contacto .rotulo span{ border-color:#55483A; color:var(--papel); }
+.contacto-cab{ text-align:left; }
+.contacto-cab .titular{ color:var(--papel); }
+.contacto-cab .parrafo{ color:var(--apagado-oscuro); }
+
+.contacto-grid{ margin-top:clamp(2rem,5vw,3.2rem); display:grid; gap:clamp(1.6rem,4vw,3rem); grid-template-columns:1fr 1fr; }
+.ficha-despacho dl{ display:grid; gap:1.1rem; }
+.ficha-despacho dt{ font-family:var(--maquina); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--apagado-oscuro); margin-bottom:.3em; }
+.ficha-despacho dd{ margin:0; font-size:1.05rem; }
+.ficha-despacho a{ text-decoration:underline; text-decoration-color:#55483A; text-underline-offset:3px; }
+.muestra{ display:block; font-size:.8rem; color:var(--apagado-oscuro); margin-top:.2em; }
+
+.mapa{ margin-top:1.8rem; }
+.mapa-nota{ color:var(--apagado-oscuro); font-size:.85rem; margin-top:.8rem; max-width:48ch; }
+.mapa iframe{ width:100%; height:280px; border:0; border-radius:10px; margin-top:1rem; }
+.contacto .boton--linea{ border-color:var(--papel); color:var(--papel); }
+.contacto .boton--linea:hover{ background:var(--papel); color:var(--tinta); }
+
+.pie{ border-top:1px solid #453B2C; margin-top:clamp(2rem,5vw,3.2rem); padding-top:clamp(1.6rem,4vw,2.4rem); }
+.pie-rejilla{ display:grid; gap:1.6rem; grid-template-columns:1.3fr repeat(3,1fr); }
+.pie-marca{ display:flex; align-items:center; gap:.8rem; }
+.pie h2{ font-family:var(--maquina); font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em; color:var(--apagado-oscuro); }
+.pie p, .pie a{ color:var(--papel); text-decoration:none; }
+.pie a:hover{ text-decoration:underline; }
+.sello{
+  margin-top:clamp(1.8rem,4vw,2.6rem); padding-top:1.4rem; border-top:1px dashed #453B2C;
+  color:var(--apagado-oscuro); font-size:.85rem; max-width:80ch;
+}
+.sello strong{ color:var(--papel); }
+@media (max-width:820px){ .pie-rejilla{ grid-template-columns:1fr 1fr; } .contacto-grid{ grid-template-columns:1fr; } }
+
+/* ==========================================================================
+   WHATSAPP FLOTANTE
+   ========================================================================== */
+.flotante-whatsapp{
+  position:fixed; right:clamp(1rem,3vw,1.8rem); bottom:clamp(1rem,3vw,1.8rem); z-index:110;
+  display:flex; align-items:center; gap:.6em; background:#2E5C46; color:#fff; padding:.9em 1.2em;
+  border-radius:999px; text-decoration:none; font-family:var(--maquina); font-size:.82rem;
+  box-shadow:0 14px 30px -14px rgba(43,36,28,.6);
+}
+.flotante-whatsapp svg{ width:22px; height:22px; flex:none; }
+
+/* ==========================================================================
+   COOKIES — el bug conocido: display:flex SOLO en :not([hidden])
+   ========================================================================== */
+.cookie-banner{
+  position:fixed; left:1rem; right:1rem; bottom:1rem; z-index:250; max-width:640px; margin-inline:auto;
+  background:var(--papel); border:1px solid var(--linea); border-radius:12px; box-shadow:var(--sombra-carpeta);
+  padding:1.3rem 1.4rem; gap:1rem; flex-wrap:wrap; align-items:center;
+}
+.cookie-banner:not([hidden]){ display:flex; }
+.cookie-banner p{ margin:0; flex:1 1 280px; font-size:.92rem; color:var(--texto); }
+.cookie-acciones{ display:flex; gap:.9rem; align-items:center; flex-wrap:wrap; }
+.cookie-mas{ font-size:.85rem; text-decoration:underline; }
+
+/* ==========================================================================
+   MARQUEE / FRANJA (no usado como protagonista, reservado por si se amplía)
+   ========================================================================== */
+
+/* ==========================================================================
+   404
+   ========================================================================== */
+.pagina-404{
+  min-height:70vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:4rem 1.5rem; gap:1.2rem;
+}
+.pagina-404 .tramite{ transform:rotate(-4deg); }
+
+/* ==========================================================================
+   LEGAL
+   ========================================================================== */
+.legal{ max-width:74ch; margin:0 auto; padding:clamp(3rem,7vw,5rem) clamp(1.25rem,4vw,2.5rem) 5rem; }
+.legal h1{ font-size:clamp(1.8rem,4vw,2.6rem); margin-bottom:.6em; }
+.legal h2{ font-size:1.3rem; margin-top:2rem; margin-bottom:.5em; }
+.legal p, .legal li{ color:var(--texto); margin-bottom:.9em; }
+.legal ul{ list-style:disc; padding-left:1.4em; }
+.legal .aviso-demo{ background:var(--crema); border:1px solid var(--linea); border-radius:10px; padding:1.2rem 1.4rem; margin-bottom:2rem; }
+
+/* ==========================================================================
+   SCROLL ACCESIBLE (solo cuando desborda de verdad)
+   ========================================================================== */
+[data-scroll-teclado]:focus-visible{ outline:3px solid var(--fiscal); outline-offset:-3px; }
+
+@media (max-width: 900px){
+  .hero{ grid-template-columns:1fr; }
+  .hero-carpeta{ order:-1; max-width:420px; margin-inline:auto; }
+}

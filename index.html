@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  SITIO DE DEMOSTRACIÓN. LOMBO CONSULTORES es una asesoría fiscal, laboral,
+  contable y de sociedades FICTICIA. Nombre, dirección, teléfono, equipo,
+  testimonios y valoración son datos de muestra inventados para enseñar esta
+  plantilla. No corresponden a ningún despacho real.
+  ============================================================================
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lombo Consultores · Asesoría en Cambre (demo)</title>
+<meta name="description" content="Plantilla de demostración de una asesoría fiscal, laboral, contable y de sociedades ficticia en Cambre (A Coruña). Concepto «Expediente»: cuatro áreas, cuatro pestañas de color. Todos los datos son de muestra.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#E8DFC8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lombo Consultores · Asesoría fiscal, laboral, contable y de sociedades (demo)">
+<meta property="og:description" content="Negocio ficticio. Cuatro áreas, cuatro pestañas de color, un solo expediente.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  "name": "Lombo Consultores",
+  "description": "Asesoría fiscal, laboral, contable y de sociedades ficticia usada como plantilla de demostración.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rúa do Mercado 9, 1º",
+    "addressLocality": "Cambre",
+    "addressRegion": "A Coruña",
+    "postalCode": "15660",
+    "addressCountry": "ES"
+  },
+  "telephone": "+34981000047",
+  "email": "ola@lomboconsultores.example",
+  "priceRange": "€€",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "14:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "16:00", "closes": "19:00" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="salto" href="#contenido">Saltar al contenido</a>
+
+<div class="cortina" id="cortina" aria-hidden="true">
+  <div class="cortina-tapa cortina-tapa--izq" id="cortina-izq"></div>
+  <div class="cortina-tapa cortina-tapa--der" id="cortina-der"></div>
+  <div class="cortina-sello" id="cortina-sello">
+    <div class="anillo"><span>Expediente<br>abierto</span></div>
+    <p class="num">Nº 2026-000000 · LOMBO CONSULTORES</p>
+  </div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-punto"></span><span class="cursor-texto" id="cursor-texto"></span></div>
+
+<header class="cabecera" id="cabecera">
+  <a class="marca" href="#inicio" aria-label="Lombo Consultores, inicio">
+    <img src="assets/logo.svg" width="48" height="48" alt="">
+    <span class="marca-texto">LOMBO CONSULTORES<em>Cambre · A Coruña</em></span>
+  </a>
+
+  <nav class="nav" id="nav" aria-label="Principal">
+    <ul class="nav-lista">
+      <li><a href="#areas">Áreas</a></li>
+      <li><a href="#confianza">Confianza</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="boton boton--tinta" href="#contacto" data-iman>Pedir una reunión</a>
+  </nav>
+
+  <button class="hamburguesa" id="hamburguesa" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main id="contenido">
+
+  <!-- ================= 1. PORTADA ================= -->
+  <section class="hero" id="inicio">
+    <div class="hero-texto">
+      <p class="sobretitulo" data-aparecer>Asesoría fiscal · laboral · contable · sociedades — Cambre</p>
+      <h1 class="titular titular--hero" data-revelar>No amontonamos papeles: los archivamos por color</h1>
+      <p class="parrafo parrafo--grande" data-aparecer>Cuatro áreas, cuatro pestañas y un solo expediente por
+        cliente. Fiscal en verde, laboral en azul grisáceo, contable en terracota y sociedades en ciruela: abre
+        la que necesites y vas directa al servicio y al día que toca, sin recorrer un despacho entero para
+        encontrar un papel.</p>
+      <div class="hero-acciones" data-aparecer>
+        <a class="boton boton--tinta" href="#contacto" data-iman>Pedir una reunión</a>
+        <a class="boton boton--linea" href="#areas" data-iman>Ver las cuatro pestañas</a>
+      </div>
+      <dl class="hero-datos" data-aparecer>
+        <div><dt>Despacho en</dt><dd>Cambre, A Coruña</dd></div>
+        <div><dt>Primera cita</dt><dd>sin coste, cuarenta minutos</dd></div>
+        <div><dt>Expediente</dt><dd>uno por cliente, con sus cuatro pestañas</dd></div>
+      </dl>
+    </div>
+
+    <figure class="hero-carpeta" aria-hidden="true">
+      <div class="carpeta-figura">
+        <ul class="carpeta-pestanas-mini">
+          <li>Fiscal</li><li>Laboral</li><li>Contable</li><li>Sociedades</li>
+        </ul>
+        <div class="carpeta-marca">
+          <img src="assets/logo.svg" width="56" height="56" alt="">
+          <div class="carpeta-marca-texto">
+            <p>LOMBO CONSULTORES</p>
+            <p>Expediente de muestra</p>
+          </div>
+        </div>
+        <div class="carpeta-linea"></div>
+        <p class="carpeta-nota">Abierto desde 2011 · Cambre (A Coruña)</p>
+      </div>
+    </figure>
+  </section>
+
+  <!-- ================= 2. NAVEGACIÓN POR PESTAÑAS ================= -->
+  <section class="areas" id="areas" aria-label="Las cuatro áreas del despacho">
+    <div class="areas-cab">
+      <p class="rotulo"><span>01</span> Las pestañas</p>
+      <h2 class="titular" data-revelar>Fiscal, laboral, contable y sociedades, cada una con su día marcado</h2>
+      <p class="parrafo">Dentro de cada pestaña está lo que se hace en esa área y el trámite que no se puede
+        dejar pasar. Ábrelas con el ratón, el teclado o el scroll.</p>
+    </div>
+
+    <div class="expediente" id="expediente">
+      <div class="expediente-viewport">
+        <nav class="pestanas-fisicas" aria-label="Ir a un área del expediente">
+          <a class="pestana-boton pestana-boton--fiscal esta-activa" href="#pagina-fiscal" data-area-index="0">
+            <span class="pestana-num">01</span><span class="pestana-nombre">Fiscal</span>
+          </a>
+          <a class="pestana-boton pestana-boton--laboral" href="#pagina-laboral" data-area-index="1">
+            <span class="pestana-num">02</span><span class="pestana-nombre">Laboral</span>
+          </a>
+          <a class="pestana-boton pestana-boton--contable" href="#pagina-contable" data-area-index="2">
+            <span class="pestana-num">03</span><span class="pestana-nombre">Contable</span>
+          </a>
+          <a class="pestana-boton pestana-boton--sociedades" href="#pagina-sociedades" data-area-index="3">
+            <span class="pestana-num">04</span><span class="pestana-nombre">Sociedades</span>
+          </a>
+        </nav>
+
+        <div class="expediente-marco">
+          <div class="expediente-tira" id="expediente-tira" data-scroll-teclado role="group" aria-label="Contenido de las cuatro áreas">
+
+            <article class="pagina pagina--fiscal" id="pagina-fiscal">
+              <div class="pagina-cab">
+                <h3>Fiscal</h3>
+                <p>IVA, IRPF, Sociedades y la relación con Hacienda llevada al día, no a última hora.</p>
+                <ul class="servicios">
+                  <li>Declaraciones trimestrales de IVA e IRPF</li>
+                  <li>Impuesto de Sociedades y pagos fraccionados</li>
+                  <li>Atención a requerimientos y comprobaciones de la Agencia Tributaria</li>
+                  <li>Planificación fiscal para autónomos y pymes</li>
+                </ul>
+              </div>
+              <div class="tramite">
+                <span class="tramite-dia">20</span>
+                <span class="tramite-mes">de cada mes</span>
+                <p>Presentación de los modelos trimestrales (enero, abril, julio, octubre).</p>
+              </div>
+            </article>
+
+            <article class="pagina pagina--laboral" id="pagina-laboral">
+              <div class="pagina-cab">
+                <h3>Laboral</h3>
+                <p>Nóminas, contratos y Seguridad Social, con el convenio de cada plantilla bien mirado.</p>
+                <ul class="servicios">
+                  <li>Altas, bajas y variaciones en la Seguridad Social</li>
+                  <li>Confección de nóminas y seguros sociales (TC1/TC2)</li>
+                  <li>Contratación, ERTE y finiquitos</li>
+                  <li>Asesoramiento sobre convenios colectivos</li>
+                </ul>
+              </div>
+              <div class="tramite">
+                <span class="tramite-dia">30</span>
+                <span class="tramite-mes">de cada mes</span>
+                <p>Fecha límite para el TC1 y el TC2 de la Seguridad Social.</p>
+              </div>
+            </article>
+
+            <article class="pagina pagina--contable" id="pagina-contable">
+              <div class="pagina-cab">
+                <h3>Contable</h3>
+                <p>Libros, cierres y cuentas anuales, con números que se entienden en una reunión de diez minutos.</p>
+                <ul class="servicios">
+                  <li>Contabilidad mensual y libros oficiales</li>
+                  <li>Cierre de ejercicio y cuentas anuales</li>
+                  <li>Cuadros de tesorería y de análisis para la gerencia</li>
+                  <li>Coordinación con el área fiscal en el Impuesto de Sociedades</li>
+                </ul>
+              </div>
+              <div class="tramite">
+                <span class="tramite-dia">30</span>
+                <span class="tramite-mes">de julio</span>
+                <p>Depósito de las cuentas anuales en el Registro Mercantil.</p>
+              </div>
+            </article>
+
+            <article class="pagina pagina--sociedades" id="pagina-sociedades">
+              <div class="pagina-cab">
+                <h3>Sociedades</h3>
+                <p>Constituir, cambiar los estatutos o cerrar una sociedad, con el papeleo mercantil resuelto.</p>
+                <ul class="servicios">
+                  <li>Constitución de sociedades limitadas y altas de autónomos societarios</li>
+                  <li>Modificación de estatutos y ampliaciones de capital</li>
+                  <li>Libro registro de socios y actas de junta</li>
+                  <li>Disoluciones y liquidaciones</li>
+                </ul>
+              </div>
+              <div class="tramite">
+                <span class="tramite-dia">Libro</span>
+                <span class="tramite-mes">de socios</span>
+                <p>Se actualiza antes del cierre de cada ejercicio, no el día de la junta.</p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. CONFIANZA / RESEÑAS ================= -->
+  <section class="confianza" id="confianza">
+    <div class="envoltorio">
+      <div class="confianza-cab">
+        <p class="rotulo"><span>02</span> Confianza</p>
+        <h2 class="titular" data-revelar>Un documento aparte, grapado con un clip</h2>
+        <p class="parrafo" style="margin-inline:auto;">Lo que dicen quienes ya tienen su expediente con
+          nosotros. Son testimonios recogidos por el propio despacho, no una puntuación de ninguna plataforma
+          externa.</p>
+      </div>
+
+      <div class="confianza-doc" data-aparecer>
+        <svg class="clip" viewBox="0 0 46 86" aria-hidden="true">
+          <path d="M23 4 C11 4 4 12 4 24 V60 C4 74 13 82 23 82 C33 82 40 75 40 64 V22 C40 15 35 10 28 10 C21 10 17 15 17 22 V58 C17 62 19 65 23 65 C27 65 29 62 29 58 V26"
+            fill="none" stroke="#8A8172" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+
+        <div class="confianza-valoracion">
+          <p class="cifra">4,8/5</p>
+          <div class="detalle">
+            <p>Encuesta interna de satisfacción, 2025</p>
+            <p>Media de las respuestas de clientes tras cerrar su primer ejercicio con nosotros. No procede de
+              Google, TripAdvisor ni de ninguna plataforma: es un cuestionario propio en papel, dentro del
+              expediente.</p>
+          </div>
+        </div>
+
+        <div class="testimonios">
+          <div class="testimonio">
+            <blockquote>«Antes me acordaba del IVA el día 19 por la tarde. Ahora me llega el aviso con dos
+              semanas de margen y sé exactamente qué pestaña mirar.»</blockquote>
+            <footer>Sabela R. · autónoma de diseño gráfico, Cambre</footer>
+          </div>
+          <div class="testimonio">
+            <blockquote>«Con la plantilla que tenemos en la ferretería, las nóminas eran un lío cada vez que
+              entraba alguien nuevo. Ahora es una llamada y ya está en su pestaña laboral.»</blockquote>
+            <footer>Ramiro F. · gerente de una ferretería familiar</footer>
+          </div>
+          <div class="testimonio">
+            <blockquote>«Constituir la sociedad nos daba pereza solo de pensarlo. Nos llevaron el libro de
+              socios y los estatutos sin que tuviéramos que entender de leyes.»</blockquote>
+            <footer>Noelia T. · socia de una consultora de eventos</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. EQUIPO ================= -->
+  <section class="equipo" id="equipo">
+    <div class="envoltorio">
+      <div class="equipo-cab">
+        <p class="rotulo"><span>03</span> Equipo</p>
+        <h2 class="titular" data-revelar>Dos fichas, dentro de la misma carpeta</h2>
+        <p class="parrafo" style="margin-inline:auto;">Un despacho pequeño a propósito: quien te atiende es
+          quien firma el papel.</p>
+      </div>
+
+      <div class="equipo-fichas">
+        <article class="ficha ficha--fiscal" data-aparecer>
+          <p class="ficha-pestana">Fiscal · contable</p>
+          <div class="ficha-cab">
+            <div class="ficha-avatar" aria-hidden="true">ML</div>
+            <div>
+              <h3>Mariña Lombo Deza</h3>
+              <p class="cargo">Socia fundadora · economista</p>
+            </div>
+          </div>
+          <p class="bio">Abrió el despacho en Cambre en 2011 tras nueve años en una asesoría regional. Lleva
+            personalmente los cierres de sociedades y las comprobaciones de Hacienda: es quien se sienta
+            delante del inspector, no quien lo evita.</p>
+        </article>
+
+        <article class="ficha ficha--laboral" data-aparecer>
+          <p class="ficha-pestana">Laboral · sociedades</p>
+          <div class="ficha-cab">
+            <div class="ficha-avatar" aria-hidden="true">BP</div>
+            <div>
+              <h3>Bruno Padín Seoane</h3>
+              <p class="cargo">Graduado social</p>
+            </div>
+          </div>
+          <p class="bio">Se ocupa de nóminas, contratos y de la parte mercantil: constituciones, estatutos y
+            libros de socios. Antes de Lombo Consultores trabajó siete años en el departamento laboral de una
+            gestoría de A Coruña.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. CONTACTO + PIE ================= -->
+  <section class="contacto" id="contacto">
+    <div class="envoltorio">
+      <div class="contacto-cab">
+        <p class="rotulo"><span>04</span> La última pestaña</p>
+        <h2 class="titular" data-revelar>Pide una reunión y abrimos tu expediente</h2>
+        <p class="parrafo">Una primera cita de cuarenta minutos, sin coste, para ver qué pestañas necesitas de
+          verdad. Sin compromiso de permanencia.</p>
+      </div>
+
+      <div class="contacto-grid">
+        <div class="ficha-despacho">
+          <dl>
+            <div><dt>Despacho</dt><dd>Rúa do Mercado 9, 1º<br>15660 Cambre · A Coruña</dd></div>
+            <div><dt>Teléfono</dt><dd><a href="tel:+34981000047">981 00 00 47</a><span class="muestra">Número de muestra: no funciona.</span></dd></div>
+            <div><dt>Correo</dt><dd><a href="mailto:ola@lomboconsultores.example">ola@lomboconsultores.example</a></dd></div>
+            <div><dt>Horario</dt><dd>Lunes a jueves 09:00–14:00 y 16:00–19:00<br>Viernes 09:00–14:00</dd></div>
+          </dl>
+          <a class="boton boton--linea" href="mailto:ola@lomboconsultores.example" data-iman style="margin-top:1.8rem;">Escribir un correo</a>
+        </div>
+
+        <div class="mapa" id="mapa">
+          <button class="boton boton--linea" type="button" id="mapa-boton" data-iman>Cargar el mapa de Google</button>
+          <p class="mapa-nota">El mapa no se carga hasta que lo pides: así esta página no pone cookies de
+            terceros por su cuenta. La dirección del despacho es inventada, así que el mapa muestra la
+            localidad, no una calle concreta.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="envoltorio pie">
+      <div class="pie-rejilla">
+        <div class="pie-marca">
+          <img src="assets/logo.svg" width="48" height="48" alt="">
+          <p>LOMBO CONSULTORES<br><span style="color:var(--apagado-oscuro);">Asesoría en Cambre</span></p>
+        </div>
+        <div>
+          <h2>Dónde</h2>
+          <p>Rúa do Mercado 9, 1º<br>15660 Cambre · A Coruña</p>
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <p><a href="tel:+34981000047">981 00 00 47</a><br><a href="mailto:ola@lomboconsultores.example">ola@lomboconsultores.example</a></p>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <p><a href="aviso-legal.html">Aviso legal y privacidad</a><br><a href="#inicio">Volver arriba</a></p>
+        </div>
+      </div>
+      <p class="sello">Sitio de demostración. <strong>Lombo Consultores es un negocio ficticio</strong>; los
+        datos de contacto, el equipo, los testimonios y la valoración de esta página son de muestra y no
+        corresponden a ningún despacho real. Ningún testimonio procede de Google, TripAdvisor ni de ninguna
+        plataforma de reseñas.</p>
+    </div>
+  </section>
+
+</main>
+
+<a class="flotante-whatsapp" href="https://wa.me/34981000047" target="_blank" rel="noopener" data-iman aria-label="Escribir por WhatsApp (número de muestra)">
+  <svg viewBox="0 0 32 32" aria-hidden="true" fill="currentColor"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.8 1.9 6.8L3 29l6.7-2.1c1.9 1.1 4.1 1.6 6.3 1.6 7 0 12.7-5.7 12.7-12.7C28.7 8.7 23 3 16 3zm0 23.1c-2 0-3.9-.5-5.5-1.5l-.4-.2-4 1.2 1.2-3.9-.3-.4c-1.1-1.8-1.7-3.8-1.7-5.9 0-6 4.9-10.9 10.9-10.9S26.9 9.7 26.9 15.7 22 26.1 16 26.1zm5.9-8.2c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1.1-1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7.1-.1.3-.4.5-.5.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1.8.3 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>
+  <span>Hablar por WhatsApp</span>
+</a>
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+  <p>Esta web solo guarda en tu navegador que ya has visto este aviso. No hay cookies de terceros ni
+    analítica, y el mapa de Google se carga únicamente si pulsas su botón.</p>
+  <div class="cookie-acciones">
+    <button class="boton boton--tinta" type="button" id="cookie-ok">De acuerdo</button>
+    <a class="cookie-mas" href="aviso-legal.html">Más información</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logotipo de Lombo Consultores: una carpeta con cuatro pestañas de color">
+  <rect x="9" y="10" width="11" height="16" rx="2" fill="#33473C"/>
+  <rect x="21" y="8" width="11" height="18" rx="2" fill="#5C6B72"/>
+  <rect x="33" y="9" width="11" height="17" rx="2" fill="#9C5A42"/>
+  <rect x="45" y="11" width="11" height="15" rx="2" fill="#5C3A4E"/>
+  <rect x="6" y="22" width="52" height="34" rx="5" fill="#FBF8F1" stroke="#2B241C" stroke-width="2.4"/>
+  <path d="M6 30 H58" stroke="#2B241C" stroke-width="1.4" opacity=".35"/>
+  <text x="32" y="46" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="700" fill="#2B241C" text-anchor="middle">LC</text>
+</svg>

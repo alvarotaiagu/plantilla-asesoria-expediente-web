@@ -1,0 +1,13 @@
+{
+  "name": "Lombo Consultores (sitio de demostración)",
+  "short_name": "Lombo Consultores",
+  "description": "Plantilla de demostración de una asesoría fiscal, laboral, contable y de sociedades ficticia. Concepto «Expediente».",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#E8DFC8",
+  "theme_color": "#E8DFC8",
+  "lang": "es",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
