@@ -47,6 +47,28 @@ html { scroll-behavior: auto; }
   --huelgo: clamp(3.2rem, 8vw, 7.5rem);
 }
 
+/* -------------------------- Control de paleta --------------------------
+   BLOQUE DE DEMOSTRACIÓN: se borra entero al entregar la web ya como
+   oficial (ver README, "El control de paleta"). Solo cambian las cuatro
+   pestañas — el papel, la tinta y las líneas son las mismas en las tres, y
+   el logo real no cambia de color con el mando. A diferencia de una
+   plantilla de acento único, aquí no hay "el color de marca": son cuatro
+   pestañas de área, así que cada paleta redefine el ensemble completo de
+   las cuatro (más sus pares "-texto", recalculados a ≥4.5:1 sobre
+   --manila con el mismo método que las --*-texto del bloque :root). */
+html.paleta-artico {
+  --fiscal:#1F4A5E; --fiscal-texto:#1F4A5E;
+  --laboral:#55707D; --laboral-texto:#4E6773;
+  --contable:#8C5C68; --contable-texto:#845662;
+  --sociedades:#4A4770; --sociedades-texto:#4A4770;
+}
+html.paleta-terracota {
+  --fiscal:#4A3222; --fiscal-texto:#4A3222;
+  --laboral:#7A6B2E; --laboral-texto:#70622A;
+  --contable:#AE5C2C; --contable-texto:#964F26;
+  --sociedades:#6E2E3C; --sociedades-texto:#6E2E3C;
+}
+
 html.has-motion [data-aparecer]{ opacity:0; transform:translateY(26px); }
 html.has-motion [data-revelar] .palabra > i{ display:inline-block; transform:translate3d(0,120%,0); }
 
@@ -452,6 +474,37 @@ html.has-motion .expediente.esta-anclado .pagina{ width:25%; flex:none; }
   box-shadow:0 14px 30px -14px rgba(43,36,28,.6);
 }
 .flotante-whatsapp svg{ width:22px; height:22px; flex:none; }
+
+/* ---------- Control de paleta (demostración, ver nota arriba en :root) ----------
+   Va abajo a la izquierda (el WhatsApp ya ocupa la derecha). --paleta-cookie-h
+   la fija main.js mientras el aviso de cookies está abierto, para no
+   solaparse con él (este sitio no tenía ya una convención --cookie-h). */
+.paleta { display: none; }
+.paleta:not([hidden]) {
+  display: flex; position: fixed; z-index: 240; left: 1.2rem;
+  bottom: calc(1.2rem + var(--paleta-cookie-h, 0px));
+  align-items: center; gap: 0.6rem; background: var(--papel); border: 1px solid var(--linea);
+  border-radius: 999px; padding: 0.4rem 0.5rem 0.4rem 0.9rem;
+  box-shadow: var(--sombra-carpeta);
+  transition: bottom 0.3s ease;
+}
+.paleta-rotulo {
+  margin: 0; font-family: var(--maquina); font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--apagado);
+}
+.paleta-botones { display: flex; gap: 0.3rem; }
+.paleta-botones button {
+  font-family: var(--maquina); font-size: 0.68rem; letter-spacing: 0.03em; cursor: pointer;
+  background: transparent; color: var(--apagado);
+  border: 1px solid var(--linea); border-radius: 999px; padding: 0.34rem 0.75rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.paleta-botones button:hover { color: var(--texto); border-color: var(--tinta-suave); }
+.paleta-botones button[aria-pressed="true"] { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+@media (max-width: 480px) {
+  .paleta:not([hidden]) { left: 0.9rem; bottom: calc(0.9rem + var(--paleta-cookie-h, 0px)); padding: 0.3rem 0.4rem 0.3rem 0.7rem; }
+  .paleta-rotulo { display: none; }
+}
 
 /* ==========================================================================
    COOKIES — el bug conocido: display:flex SOLO en :not([hidden])

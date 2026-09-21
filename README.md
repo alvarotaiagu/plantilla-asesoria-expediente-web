@@ -188,6 +188,48 @@ leyendo el código:
 - **Mapa**: cambiar la query de `js/main.js` (`function mapa()`), que hoy
   apunta a "Cambre, A Coruña" sin calle porque la dirección es inventada.
 
+## El control de paleta (demostración, quitar antes de dar la web por oficial)
+
+Mando flotante abajo a la izquierda (`#paleta`) para enseñar la misma
+carpeta con tres combinaciones de las cuatro pestañas delante del cliente,
+sin reeditar el CSS en directo. Nació el mismo día en que, en una reunión
+real con Dourado & Fernández (otra asesoría de la biblioteca), el cliente
+dijo que no le gustaba el verde del sitio — desde entonces es requisito de
+`PLIEGO.md §5` para toda la carpeta.
+
+**Caso especial de esta plantilla**: a diferencia de un sitio de acento
+único (donde el mando cambia "el color de marca"), aquí no hay un único
+acento — hay **cuatro pestañas de área**. El mando no cambia una variable,
+cambia el ensemble completo de las cuatro a la vez, con sus pares
+`-texto` recalculados a ≥4.5:1 sobre `--manila` (mismo método que
+`--laboral-texto`/`--contable-texto` en el bloque `:root`). El papel, la
+tinta y las líneas nunca cambian.
+
+Las tres paletas:
+
+| Paleta | Fiscal | Laboral | Contable | Sociedades |
+|---|---|---|---|---|
+| **Manila** (la real, por defecto) | `#33473C` verde botella | `#5C6B72` azul grisáceo | `#9C5A42` terracota | `#5C3A4E` ciruela |
+| **Ártico** (mood frío/glaciar) | `#1F4A5E` petróleo | `#55707D` gris acero | `#8C5C68` malva polvo | `#4A4770` índigo violeta |
+| **Terracota** (mood cálido/tierra) | `#4A3222` café tostado | `#7A6B2E` oliva | `#AE5C2C` óxido | `#6E2E3C` vino |
+
+Para quitarlo al entregar la web ya como oficial:
+
+1. En `index.html`: borrar el `<script>` de cabecera que resuelve
+   `expediente-paleta` desde `localStorage` (justo antes de `</head>`) y
+   el bloque `<div class="paleta" id="paleta" hidden>…</div>` (junto al
+   botón de WhatsApp).
+2. En `css/style.css`: borrar el bloque `html.paleta-artico` /
+   `html.paleta-terracota` (justo tras cerrarse el `:root`) y el bloque
+   "Control de paleta (demostración…)" junto al CSS de WhatsApp.
+3. En `js/main.js`: borrar la función `initPaleta()` completa (vive junto
+   a `menu()`, `cookies()` y `mapa()`, dentro del bloque "funciona con o
+   sin GSAP").
+4. Comprobar que no queda ningún `html.paleta-*` en el HTML servido (con
+   el mando puesto en cualquier paleta que no sea Manila, la clase queda
+   grabada en `localStorage`; recargar una vez sin el script de cabecera
+   para limpiarla, o borrar manualmente la clave `expediente-paleta`).
+
 ## Créditos
 
 Sin fotografías (el sector no las exige); toda la obra gráfica es SVG

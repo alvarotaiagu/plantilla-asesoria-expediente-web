@@ -92,6 +92,55 @@
     });
   })();
 
+  /* ---------------- El control de paleta ----------------
+     NO ES PARTE DEL SITIO. Es un mando para enseñar la misma carpeta con
+     tres combinaciones de las cuatro pestañas delante del cliente mientras
+     decide. Al entregar la web ya como oficial se borra esta función, el
+     bloque .paleta del CSS, el <div id="paleta"> y la bandera del <head>.
+     Funciona con o sin GSAP: no depende del bloque de movimiento. */
+  (function initPaleta() {
+    var caja = $("#paleta");
+    var botones = {
+      manila: $("#paleta-manila"),
+      artico: $("#paleta-artico"),
+      terracota: $("#paleta-terracota")
+    };
+    if (!caja || !botones.manila || !botones.artico || !botones.terracota) { return; }
+    var CLAVE_PALETA = "expediente-paleta";
+
+    caja.hidden = false; // sin JS no se enseña: no haría nada
+
+    /* Este sitio no tenía ya una convención --cookie-h para que los
+       flotantes esquiven el aviso de cookies (el WhatsApp no la usa: vive
+       en la esquina contraria). Como el mando sí puede solapar el aviso
+       —ambos anclados abajo—, se mide aquí su alto real. */
+    function ajustarPorCookies() {
+      var banner = $("#cookie-banner");
+      var alto = (banner && !banner.hidden) ? banner.offsetHeight : 0;
+      document.documentElement.style.setProperty("--paleta-cookie-h", alto ? (alto + 14) + "px" : "0px");
+    }
+    ajustarPorCookies();
+    window.addEventListener("resize", ajustarPorCookies);
+    var cookieOk = $("#cookie-ok");
+    if (cookieOk) { cookieOk.addEventListener("click", function () { setTimeout(ajustarPorCookies, 0); }); }
+
+    function pintar(nombre, guardar) {
+      document.documentElement.classList.remove("paleta-artico", "paleta-terracota");
+      if (nombre !== "manila") { document.documentElement.classList.add("paleta-" + nombre); }
+      Object.keys(botones).forEach(function (k) {
+        botones[k].setAttribute("aria-pressed", String(k === nombre));
+      });
+      if (guardar) { try { localStorage.setItem(CLAVE_PALETA, nombre); } catch (e) {} }
+    }
+
+    var actual = document.documentElement.classList.contains("paleta-artico") ? "artico"
+      : document.documentElement.classList.contains("paleta-terracota") ? "terracota" : "manila";
+    pintar(actual, false);
+    botones.manila.addEventListener("click", function () { pintar("manila", true); });
+    botones.artico.addEventListener("click", function () { pintar("artico", true); });
+    botones.terracota.addEventListener("click", function () { pintar("terracota", true); });
+  })();
+
   (function mapa() {
     var boton = $("#mapa-boton"), caja = $("#mapa");
     if (!boton || !caja) { return; }
