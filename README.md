@@ -65,7 +65,7 @@ Multi-acento, una pestaña por área, todas desaturadas para que convivan:
 
 | Token | Uso | Valor |
 |---|---|---|
-| `--manila` | fondo base | `#E8DFC8` |
+| `--manila` | fondo base | `#E8DFC8` (valor nativo — ver nota) |
 | `--crema` / `--papel` | paneles y "papel" | `#F4EEE0` / `#FBF8F1` |
 | `--tinta` | texto principal, pie oscuro | `#2B241C` |
 | `--fiscal` | pestaña fiscal | `#33473C` (verde botella) |
@@ -85,6 +85,11 @@ propio token, calculado con un script de razón WCAG
   definieron `--laboral-texto` (`#556065`, 4,87:1) y `--contable-texto`
   (`#8B523C`, 4,69:1) solo para letras; el acento de marca original se
   queda intacto en fondos, pestañas y filetes.
+> Nota (2026-09-21): `#E8DFC8` es el valor **nativo** de `--manila`, el que
+> se ve con la paleta "Manila" del mando. El `:root` sin clase (el que
+> arranca por defecto) usa un `--manila` distinto, blanco — ver "El
+> control de paleta" más abajo para el porqué.
+
 - Sobre cualquiera de los cuatro rellenos de acento, el texto va siempre
   en `--sobre-acento` (un tono papel), que da entre 5,01:1 y 9,40:1 —
   nunca en manila, que solo da 4,00–4,16:1 sobre laboral/contable y no
@@ -208,16 +213,49 @@ sin `localStorage`: así el color deja de ser una variable al comparar y lo
 esta plantilla no desaparece: pasa a ser la opción "Manila", uno de los
 cuatro botones del mando.
 
+**El fondo también es parte del "Burdeos" por defecto (2026-09-21)**: la
+web real de Dourado & Fernández tiene el papel **blanco** (`#FFFFFF`), no
+manila de carpeta — así que dejar solo las pestañas en rojo sobre nuestra
+carpeta tostada habría sido "sus rojos en nuestro fondo", no una
+previsualización fiel para el correo comparativo. Por eso, además de las
+cuatro pestañas, el `:root` sin clase (Burdeos) redefine `--manila` a
+blanco puro. `--crema` y `--papel` (los tonos de panel/documento —
+`.tramite`, `.confianza`, tarjetas) **no** se tocan: ya eran casi blancos
+de por sí y funcionan igual sobre la nueva base.
+
+*Decisión de diseño sobre la sombra de la carpeta*: `--manila-sombra` es la
+línea de canto de 14px de las tapas de la cortina de entrada
+(`.cortina-tapa::before`, ver captura del gesto de apertura). Llevarla a
+blanco puro junto con `--manila` la habría hecho desaparecer del todo
+(blanco sobre blanco), perdiendo la lectura de "canto/pliegue de carpeta"
+justo en el gesto que abre la web. Se dejó en su lugar en un gris cálido
+muy claro (`#E6E2D8` — ni el tostado original `#DCD1B7`, ni un gris frío
+neutro) para que el pliegue se siga leyendo sin reintroducir el manila que
+se acaba de retirar. `--sombra-carpeta` (el `box-shadow` de tarjetas y
+documentos) no necesitó tocarse: es un rgba sobre `--tinta`, no depende
+del tono del papel.
+
+Manila, Ártico y Terracota **siguen sobre el papel tostado nativo**: como
+no fijan su propio `--manila`/`--manila-sombra`, heredarían el blanco del
+`:root` en cuanto éste cambió — así que las tres clases `html.paleta-*`
+reafirman ahora esos dos tokens con sus valores originales
+(`#E8DFC8`/`#DCD1B7`) para no verse afectadas por el cambio de Burdeos.
+
 **Caso especial de esta plantilla**: a diferencia de un sitio de acento
 único (donde el mando cambia "el color de marca"), aquí no hay un único
 acento — hay **cuatro pestañas de área**. El mando no cambia una variable,
 cambia el ensemble completo de las cuatro a la vez, con sus pares
-`-texto` recalculados a ≥4.5:1 sobre `--manila` (mismo método que
-`--laboral-texto`/`--contable-texto` en el bloque `:root`). El papel, la
-tinta y las líneas nunca cambian. Para "Burdeos" solo hace falta recalcular
-`--contable-texto` (las otras tres pestañas ya pasan 4.5:1 con su propio
-tono de marca) porque, a diferencia de Manila, ninguna de las cuatro puede
-alejarse del rojo de Dourado sin dejar de leerse como su color.
+`-texto` recalculados a ≥4.5:1 sobre la superficie más oscura del ensemble
+(mismo método que `--laboral-texto`/`--contable-texto` en el bloque
+`:root`) — para Manila/Ártico/Terracota eso sigue siendo `--manila`
+tostado; para Burdeos, con `--manila` ahora blanco, la superficie más
+oscura pasa a ser `--crema` (`#F4EEE0`, sin cambios), así que es contra
+esa donde se verificaron los cuatro pares (6,52:1–11,75:1; contra el
+blanco suben más, 7,54:1–13,59:1). La tinta y las líneas nunca cambian.
+Para "Burdeos" solo hace falta recalcular `--contable-texto` (las otras
+tres pestañas ya pasan 4.5:1 con su propio tono de marca) porque, a
+diferencia de Manila, ninguna de las cuatro puede alejarse del rojo de
+Dourado sin dejar de leerse como su color.
 
 Las cuatro paletas:
 
@@ -245,10 +283,13 @@ Para quitarlo al entregar la web ya como oficial:
    `html.paleta-artico` / `html.paleta-terracota` (justo tras cerrarse el
    `:root`) y el bloque "Control de paleta (demostración…)" junto al CSS
    de WhatsApp. El bloque `:root` se queda tal cual, con el rojo Burdeos
-   como color final — si el cliente real de esta copia concreta prefiere
-   otra de las cuatro (p. ej. Manila), copiar sus 8 valores (`--fiscal`/
-   `--laboral`/`--contable`/`--sociedades` + los cuatro `-texto`) desde su
-   bloque `html.paleta-*` al `:root` antes de borrar ese bloque.
+   (y su `--manila`/`--manila-sombra` blancos) como estado final — si el
+   cliente real de esta copia concreta prefiere otra de las cuatro (p. ej.
+   Manila), copiar sus 10 valores (`--manila`/`--manila-sombra` +
+   `--fiscal`/`--laboral`/`--contable`/`--sociedades` + los cuatro
+   `-texto`) desde su bloque `html.paleta-*` al `:root` antes de borrar ese
+   bloque — si no se copian también `--manila`/`--manila-sombra`, el papel
+   se queda en blanco (el de Burdeos) con las pestañas de otra paleta.
 3. En `js/main.js`: borrar la función `initPaleta()` completa (vive junto
    a `menu()`, `cookies()` y `mapa()`, dentro del bloque "funciona con o
    sin GSAP").

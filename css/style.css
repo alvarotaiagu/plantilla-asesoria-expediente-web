@@ -8,9 +8,27 @@
 html { scroll-behavior: auto; }
 
 :root{
-  /* --- superficies --- */
-  --manila:#E8DFC8;
-  --manila-sombra:#DCD1B7;
+  /* --- superficies ---
+     El fondo base (--manila) es BLANCO puro aquí porque el :root ahora
+     arranca en rojo Dourado & Fernández (ver bloque de las pestañas más
+     abajo): su web real tiene papel blanco, no manila de carpeta — y el
+     objetivo de esta ronda es que la vista por defecto sea una previsualización
+     fiel para el correo comparativo, no "sus rojos sobre nuestra carpeta".
+     --manila-sombra NO se lleva a blanco con ella: es la línea de canto de
+     14px de las tapas de la cortina de entrada (.cortina-tapa::before) y en
+     blanco puro sobre blanco puro desaparecería del todo, perdiendo la
+     lectura de "canto de carpeta". Se deja en un gris cálido muy claro
+     (no el tostado original, pero tampoco neutro frío) para que el pliegue
+     se siga viendo sin reintroducir el tono manila que se acaba de quitar.
+     --crema y --papel NO son "fondo de página": son los tonos de panel/
+     documento (tarjetas, .tramite, .confianza, avisos) — ya son casi
+     blancos (#F4EEE0/#FBF8F1) y funcionan igual de bien sobre la nueva
+     base blanca, así que se dejan tal cual.
+     Los valores nativos de carpeta manila (tostada) viven ahora en
+     html.paleta-manila, junto con Ártico y Terracota, que los heredan
+     también para no verse afectados por este cambio (ver esos bloques). */
+  --manila:#FFFFFF;
+  --manila-sombra:#E6E2D8;
   --crema:#F4EEE0;
   --papel:#FBF8F1;
   --tinta:#2B241C;
@@ -19,7 +37,10 @@ html { scroll-behavior: auto; }
 
   /* --- texto --- */
   --texto:#2B241C;
-  --apagado:#5F574B;        /* AA sobre manila 5.36 · crema 6.15 · papel 6.71 */
+  /* --apagado sobre el --manila de este :root (blanco): 7.12 — sube respecto
+     al 5.36 que daba con el manila tostado nativo, sin recalcular nada más
+     porque solo mejora. Sobre crema/papel (sin cambios) sigue 6.15/6.71. */
+  --apagado:#5F574B;
   --apagado-oscuro:#B9AF9E; /* AA sobre tinta 7.06, para el pie oscuro */
 
   /* --- las cuatro pestañas ---
@@ -34,11 +55,14 @@ html { scroll-behavior: auto; }
 
   /* tokens de TEXTO derivados de cada acento: el de marca se queda intacto en
      fondos y filetes; estos son los únicos que se usan para letras sobre
-     manila/crema/papel, calculados con contraste.py hasta pasar 4.5:1 */
-  --fiscal-texto:#9C2A2E;      /* 5.68 sobre manila */
-  --laboral-texto:#7A1418;     /* 8.15 sobre manila */
-  --contable-texto:#A43C3A;    /* 4.81 sobre manila (el tono de marca solo da 4.25) */
-  --sociedades-texto:#5C1114;  /* 10.24 sobre manila */
+     manila/crema/papel, calculados con contraste.py hasta pasar 4.5:1.
+     Con --manila ahora blanco, ya no es la superficie más oscura del
+     ensemble — --crema (#F4EEE0, sin cambios) lo es, así que es el caso
+     que manda aquí; contra el blanco los números solo mejoran (7.54–13.59). */
+  --fiscal-texto:#9C2A2E;      /* 6.52 sobre crema · 7.54 sobre manila blanco */
+  --laboral-texto:#7A1418;     /* 9.35 sobre crema · 10.82 sobre manila blanco */
+  --contable-texto:#A43C3A;    /* 5.52 sobre crema · 6.39 sobre manila blanco (el tono de marca solo daba 4.25 sobre el manila tostado original) */
+  --sociedades-texto:#5C1114;  /* 11.75 sobre crema · 13.59 sobre manila blanco */
 
   --sobre-acento:#FBF8F1;      /* texto sobre cualquiera de los 4 rellenos: 5.32–12.81 */
 
@@ -53,31 +77,42 @@ html { scroll-behavior: auto; }
 
 /* -------------------------- Control de paleta --------------------------
    BLOQUE DE DEMOSTRACIÓN: se borra entero al entregar la web ya como
-   oficial (ver README, "El control de paleta"). Solo cambian las cuatro
-   pestañas — el papel, la tinta y las líneas son las mismas en las cuatro,
-   y el logo real no cambia de color con el mando. A diferencia de una
+   oficial (ver README, "El control de paleta"). Cambian las cuatro
+   pestañas — la tinta y las líneas son las mismas en las cuatro — y el
+   logo real no cambia de color con el mando. A diferencia de una
    plantilla de acento único, aquí no hay "el color de marca": son cuatro
    pestañas de área, así que cada paleta redefine el ensemble completo de
-   las cuatro (más sus pares "-texto", recalculados a ≥4.5:1 sobre
-   --manila con el mismo método que las --*-texto del bloque :root).
+   las cuatro (más sus pares "-texto", recalculados a ≥4.5:1 sobre la
+   superficie más oscura del ensemble con el mismo método que las
+   --*-texto del bloque :root).
+
+   El papel YA NO es igual en las cuatro: Burdeos (rojo Dourado &
+   Fernández, en el propio :root) usa --manila blanco para previsualizar
+   su web real; Manila/Ártico/Terracota siguen sobre el papel tostado
+   nativo de esta plantilla y por eso reafirman aquí --manila/
+   --manila-sombra explícitamente (si no, heredarían el blanco del :root
+   y las tres dejarían de verse como la carpeta manila original).
 
    El rojo Dourado & Fernández vive ahora en el propio :root (es el que
    arranca por defecto, sin clase — ver más abajo por qué). "Manila" es el
    ensemble nativo original de esta plantilla (verde/azul grisáceo/
    terracota/ciruela) y se recupera aquí como clase explícita. */
 html.paleta-manila {
+  --manila:#E8DFC8; --manila-sombra:#DCD1B7;
   --fiscal:#33473C; --fiscal-texto:#33473C;
   --laboral:#5C6B72; --laboral-texto:#556065;
   --contable:#9C5A42; --contable-texto:#8B523C;
   --sociedades:#5C3A4E; --sociedades-texto:#5C3A4E;
 }
 html.paleta-artico {
+  --manila:#E8DFC8; --manila-sombra:#DCD1B7;
   --fiscal:#1F4A5E; --fiscal-texto:#1F4A5E;
   --laboral:#55707D; --laboral-texto:#4E6773;
   --contable:#8C5C68; --contable-texto:#845662;
   --sociedades:#4A4770; --sociedades-texto:#4A4770;
 }
 html.paleta-terracota {
+  --manila:#E8DFC8; --manila-sombra:#DCD1B7;
   --fiscal:#4A3222; --fiscal-texto:#4A3222;
   --laboral:#7A6B2E; --laboral-texto:#70622A;
   --contable:#AE5C2C; --contable-texto:#964F26;
