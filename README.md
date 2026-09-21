@@ -191,11 +191,22 @@ leyendo el código:
 ## El control de paleta (demostración, quitar antes de dar la web por oficial)
 
 Mando flotante abajo a la izquierda (`#paleta`) para enseñar la misma
-carpeta con tres combinaciones de las cuatro pestañas delante del cliente,
-sin reeditar el CSS en directo. Nació el mismo día en que, en una reunión
-real con Dourado & Fernández (otra asesoría de la biblioteca), el cliente
-dijo que no le gustaba el verde del sitio — desde entonces es requisito de
-`PLIEGO.md §5` para toda la carpeta.
+carpeta con cuatro combinaciones de las cuatro pestañas delante del
+cliente, sin reeditar el CSS en directo. Nació el mismo día en que, en
+una reunión real con Dourado & Fernández (otra asesoría de la biblioteca),
+el cliente dijo que no le gustaba el verde del sitio — desde entonces es
+requisito de `PLIEGO.md §5` para toda la carpeta.
+
+**Por qué el rojo de Dourado es ahora el color de arranque (2026-09-21)**:
+las siete plantillas de asesoría/gestoría de la biblioteca se envían por
+email a Dourado & Fernández, cliente real, para que elijan qué
+**estructura** prefieren — no qué color. Como ya tienen su propia web en
+su rojo de marca, ese rojo se saca de su paleta real (`--oro` #9C2A2E y
+sus tonos vecinos) y se convierte en el arranque por defecto de las siete,
+sin `localStorage`: así el color deja de ser una variable al comparar y lo
+único que cambia entre plantillas es el concepto. El ensemble nativo de
+esta plantilla no desaparece: pasa a ser la opción "Manila", uno de los
+cuatro botones del mando.
 
 **Caso especial de esta plantilla**: a diferencia de un sitio de acento
 único (donde el mando cambia "el color de marca"), aquí no hay un único
@@ -203,15 +214,26 @@ acento — hay **cuatro pestañas de área**. El mando no cambia una variable,
 cambia el ensemble completo de las cuatro a la vez, con sus pares
 `-texto` recalculados a ≥4.5:1 sobre `--manila` (mismo método que
 `--laboral-texto`/`--contable-texto` en el bloque `:root`). El papel, la
-tinta y las líneas nunca cambian.
+tinta y las líneas nunca cambian. Para "Burdeos" solo hace falta recalcular
+`--contable-texto` (las otras tres pestañas ya pasan 4.5:1 con su propio
+tono de marca) porque, a diferencia de Manila, ninguna de las cuatro puede
+alejarse del rojo de Dourado sin dejar de leerse como su color.
 
-Las tres paletas:
+Las cuatro paletas:
 
 | Paleta | Fiscal | Laboral | Contable | Sociedades |
 |---|---|---|---|---|
-| **Manila** (la real, por defecto) | `#33473C` verde botella | `#5C6B72` azul grisáceo | `#9C5A42` terracota | `#5C3A4E` ciruela |
+| **Burdeos** (rojo Dourado & Fernández, por defecto) | `#9C2A2E` su `--oro` exacto | `#7A1418` oxblood (su `--oro-tinta`) | `#B2413F` ladrillo polvoriento (su `--salvia`) | `#5C1114` vino/ciruela oscuro (su `--verde`) |
+| **Manila** (el ensemble nativo original) | `#33473C` verde botella | `#5C6B72` azul grisáceo | `#9C5A42` terracota | `#5C3A4E` ciruela |
 | **Ártico** (mood frío/glaciar) | `#1F4A5E` petróleo | `#55707D` gris acero | `#8C5C68` malva polvo | `#4A4770` índigo violeta |
 | **Terracota** (mood cálido/tierra) | `#4A3222` café tostado | `#7A6B2E` oliva | `#AE5C2C` óxido | `#6E2E3C` vino |
+
+Las cuatro tonalidades de Burdeos son deliberadamente parientes tonales de
+un solo rojo (nunca se cruza a azul/verde/teal como sí hacen Ártico o
+Terracota): `--fiscal`, la pestaña más prominente, es el rojo exacto de
+Dourado; las otras tres son valores reales de su propia paleta (oro-tinta,
+salvia, verde), no inventados, para que el conjunto se reconozca sin
+ambigüedad como "el rojo de Dourado & Fernández" nada más abrir el email.
 
 Para quitarlo al entregar la web ya como oficial:
 
@@ -219,14 +241,19 @@ Para quitarlo al entregar la web ya como oficial:
    `expediente-paleta` desde `localStorage` (justo antes de `</head>`) y
    el bloque `<div class="paleta" id="paleta" hidden>…</div>` (junto al
    botón de WhatsApp).
-2. En `css/style.css`: borrar el bloque `html.paleta-artico` /
-   `html.paleta-terracota` (justo tras cerrarse el `:root`) y el bloque
-   "Control de paleta (demostración…)" junto al CSS de WhatsApp.
+2. En `css/style.css`: borrar los bloques `html.paleta-manila` /
+   `html.paleta-artico` / `html.paleta-terracota` (justo tras cerrarse el
+   `:root`) y el bloque "Control de paleta (demostración…)" junto al CSS
+   de WhatsApp. El bloque `:root` se queda tal cual, con el rojo Burdeos
+   como color final — si el cliente real de esta copia concreta prefiere
+   otra de las cuatro (p. ej. Manila), copiar sus 8 valores (`--fiscal`/
+   `--laboral`/`--contable`/`--sociedades` + los cuatro `-texto`) desde su
+   bloque `html.paleta-*` al `:root` antes de borrar ese bloque.
 3. En `js/main.js`: borrar la función `initPaleta()` completa (vive junto
    a `menu()`, `cookies()` y `mapa()`, dentro del bloque "funciona con o
    sin GSAP").
 4. Comprobar que no queda ningún `html.paleta-*` en el HTML servido (con
-   el mando puesto en cualquier paleta que no sea Manila, la clase queda
+   el mando puesto en cualquier paleta que no sea Burdeos, la clase queda
    grabada en `localStorage`; recargar una vez sin el script de cabecera
    para limpiarla, o borrar manualmente la clave `expediente-paleta`).
 

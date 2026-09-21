@@ -94,18 +94,23 @@
 
   /* ---------------- El control de paleta ----------------
      NO ES PARTE DEL SITIO. Es un mando para enseñar la misma carpeta con
-     tres combinaciones de las cuatro pestañas delante del cliente mientras
-     decide. Al entregar la web ya como oficial se borra esta función, el
-     bloque .paleta del CSS, el <div id="paleta"> y la bandera del <head>.
-     Funciona con o sin GSAP: no depende del bloque de movimiento. */
+     cuatro combinaciones de las cuatro pestañas delante del cliente
+     mientras decide. Al entregar la web ya como oficial se borra esta
+     función, el bloque .paleta del CSS, el <div id="paleta"> y la bandera
+     del <head>. Funciona con o sin GSAP: no depende del bloque de
+     movimiento.
+     "burdeos" (el rojo real de Dourado & Fernández) es el estado por
+     defecto: sin clase en <html>, igual que "manila" lo era antes de este
+     cambio. Las otras tres viven como clases explícitas "paleta-*". */
   (function initPaleta() {
     var caja = $("#paleta");
     var botones = {
+      burdeos: $("#paleta-burdeos"),
       manila: $("#paleta-manila"),
       artico: $("#paleta-artico"),
       terracota: $("#paleta-terracota")
     };
-    if (!caja || !botones.manila || !botones.artico || !botones.terracota) { return; }
+    if (!caja || !botones.burdeos || !botones.manila || !botones.artico || !botones.terracota) { return; }
     var CLAVE_PALETA = "expediente-paleta";
 
     caja.hidden = false; // sin JS no se enseña: no haría nada
@@ -125,17 +130,19 @@
     if (cookieOk) { cookieOk.addEventListener("click", function () { setTimeout(ajustarPorCookies, 0); }); }
 
     function pintar(nombre, guardar) {
-      document.documentElement.classList.remove("paleta-artico", "paleta-terracota");
-      if (nombre !== "manila") { document.documentElement.classList.add("paleta-" + nombre); }
+      document.documentElement.classList.remove("paleta-manila", "paleta-artico", "paleta-terracota");
+      if (nombre !== "burdeos") { document.documentElement.classList.add("paleta-" + nombre); }
       Object.keys(botones).forEach(function (k) {
         botones[k].setAttribute("aria-pressed", String(k === nombre));
       });
       if (guardar) { try { localStorage.setItem(CLAVE_PALETA, nombre); } catch (e) {} }
     }
 
-    var actual = document.documentElement.classList.contains("paleta-artico") ? "artico"
-      : document.documentElement.classList.contains("paleta-terracota") ? "terracota" : "manila";
+    var actual = document.documentElement.classList.contains("paleta-manila") ? "manila"
+      : document.documentElement.classList.contains("paleta-artico") ? "artico"
+      : document.documentElement.classList.contains("paleta-terracota") ? "terracota" : "burdeos";
     pintar(actual, false);
+    botones.burdeos.addEventListener("click", function () { pintar("burdeos", true); });
     botones.manila.addEventListener("click", function () { pintar("manila", true); });
     botones.artico.addEventListener("click", function () { pintar("artico", true); });
     botones.terracota.addEventListener("click", function () { pintar("terracota", true); });

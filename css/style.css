@@ -22,21 +22,25 @@ html { scroll-behavior: auto; }
   --apagado:#5F574B;        /* AA sobre manila 5.36 · crema 6.15 · papel 6.71 */
   --apagado-oscuro:#B9AF9E; /* AA sobre tinta 7.06, para el pie oscuro */
 
-  /* --- las cuatro pestañas --- */
-  --fiscal:#33473C;
-  --laboral:#5C6B72;
-  --contable:#9C5A42;
-  --sociedades:#5C3A4E;
+  /* --- las cuatro pestañas ---
+     Por defecto en rojo Dourado & Fernández (ver bloque "Control de
+     paleta" más abajo): --fiscal es su --oro #9C2A2E exacto, las otras
+     tres son variantes tonales de la misma familia de rojo tomadas de su
+     propia paleta real (oro-tinta/salvia/verde), no colores inventados. */
+  --fiscal:#9C2A2E;
+  --laboral:#7A1418;
+  --contable:#B2413F;
+  --sociedades:#5C1114;
 
   /* tokens de TEXTO derivados de cada acento: el de marca se queda intacto en
      fondos y filetes; estos son los únicos que se usan para letras sobre
      manila/crema/papel, calculados con contraste.py hasta pasar 4.5:1 */
-  --fiscal-texto:#33473C;      /* 7.51 sobre manila */
-  --laboral-texto:#556065;     /* 4.87 sobre manila (el tono de marca solo da 4.16) */
-  --contable-texto:#8B523C;    /* 4.69 sobre manila (el tono de marca solo da 4.00) */
-  --sociedades-texto:#5C3A4E;  /* 7.29 sobre manila */
+  --fiscal-texto:#9C2A2E;      /* 5.68 sobre manila */
+  --laboral-texto:#7A1418;     /* 8.15 sobre manila */
+  --contable-texto:#A43C3A;    /* 4.81 sobre manila (el tono de marca solo da 4.25) */
+  --sociedades-texto:#5C1114;  /* 10.24 sobre manila */
 
-  --sobre-acento:#FBF8F1;      /* texto sobre cualquiera de los 4 rellenos: 5.01–9.40 */
+  --sobre-acento:#FBF8F1;      /* texto sobre cualquiera de los 4 rellenos: 5.32–12.81 */
 
   --radio:14px;
   --sombra-carpeta: 0 18px 40px -22px rgba(43,36,28,.45);
@@ -50,12 +54,23 @@ html { scroll-behavior: auto; }
 /* -------------------------- Control de paleta --------------------------
    BLOQUE DE DEMOSTRACIÓN: se borra entero al entregar la web ya como
    oficial (ver README, "El control de paleta"). Solo cambian las cuatro
-   pestañas — el papel, la tinta y las líneas son las mismas en las tres, y
-   el logo real no cambia de color con el mando. A diferencia de una
+   pestañas — el papel, la tinta y las líneas son las mismas en las cuatro,
+   y el logo real no cambia de color con el mando. A diferencia de una
    plantilla de acento único, aquí no hay "el color de marca": son cuatro
    pestañas de área, así que cada paleta redefine el ensemble completo de
    las cuatro (más sus pares "-texto", recalculados a ≥4.5:1 sobre
-   --manila con el mismo método que las --*-texto del bloque :root). */
+   --manila con el mismo método que las --*-texto del bloque :root).
+
+   El rojo Dourado & Fernández vive ahora en el propio :root (es el que
+   arranca por defecto, sin clase — ver más abajo por qué). "Manila" es el
+   ensemble nativo original de esta plantilla (verde/azul grisáceo/
+   terracota/ciruela) y se recupera aquí como clase explícita. */
+html.paleta-manila {
+  --fiscal:#33473C; --fiscal-texto:#33473C;
+  --laboral:#5C6B72; --laboral-texto:#556065;
+  --contable:#9C5A42; --contable-texto:#8B523C;
+  --sociedades:#5C3A4E; --sociedades-texto:#5C3A4E;
+}
 html.paleta-artico {
   --fiscal:#1F4A5E; --fiscal-texto:#1F4A5E;
   --laboral:#55707D; --laboral-texto:#4E6773;
